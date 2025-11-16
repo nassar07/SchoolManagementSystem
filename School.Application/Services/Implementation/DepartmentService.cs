@@ -68,6 +68,30 @@ namespace School.Application.Services.Implementation
             {
                 return new ServiceResponse { Success = false, Message = "NotFound" };
             }
+            if (existingDepartment.Name != updateDepartmentDto.Name)
+            {
+                if (!await departmentSpecifies.IsDepartmentNameUniqueAsync(updateDepartmentDto.Name))
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Message = "Department name must be unique."
+                    };
+                }
+            }
+            bool isHeadChanged = existingDepartment.HeadOfDepartmentId != updateDepartmentDto.HeadOfDepartmentId;
+            if (isHeadChanged)
+            {
+                var userRole = await role.GetRoleByUserId(updateDepartmentDto.HeadOfDepartmentId);
+                if (userRole != "Teacher")
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        Message = "Head of Department must have the role of Teacher."
+                    };
+                }
+            }
             mapper.Map(updateDepartmentDto, existingDepartment);
             var result = await departmentInterface.UpdateAsync(existingDepartment);
             return result > 0 ? new ServiceResponse { Success = true, Message = "Department Updated successfully." } : new ServiceResponse { Success = false, Message = "Failled " };

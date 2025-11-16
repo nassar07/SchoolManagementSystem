@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using School.Application.DTOs.Course;
 using School.Application.DTOs.Department;
 using School.Application.Services.Interfaces;
 
@@ -8,7 +9,7 @@ namespace School.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize(Roles = "Admin")]
-    public class AdminController(IDepartmentService departmentService) : ControllerBase
+    public class AdminController(IDepartmentService departmentService , ICourseService courseService) : ControllerBase
     {
         [HttpPost("departments/create")]
         public async Task<IActionResult> CreateDepartment([FromBody] CreateDepartmentDto createDepartmentDto)
@@ -42,6 +43,42 @@ namespace School.API.Controllers
         public async Task<IActionResult> DeleteDepartment(Guid id)
         {
             var result = await departmentService.DeleteDepartmentAsync(id);
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
+
+
+        [HttpPost("courses/create")]
+        public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto createCourseDto)
+        {
+            var result = await courseService.CreateCourseAsync(createCourseDto);
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpGet("courses/GetById/{id}")]
+        public async Task<IActionResult> GetCourseById(Guid id)
+        {
+            var courseDto = await courseService.GetCourseByIdAsync(id);
+            return courseDto != null ? Ok(courseDto) : NotFound();
+        }
+
+        [HttpGet("courses/GetAll")]
+        public async Task<IActionResult> GetAllCourses()
+        {
+            var courseDtos = await courseService.GetAllCoursesAsync();
+            return Ok(courseDtos);
+        }
+
+        [HttpPut("courses/Update/{id}")]
+        public async Task<IActionResult> UpdateCourse(Guid id, [FromBody] UpdateCourseDto updateCourseDto)
+        {
+            var result = await courseService.UpdateCourseAsync(id,updateCourseDto);
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpDelete("courses/delete/{id}")]
+        public async Task<IActionResult> DeleteCourse(Guid id)
+        {
+            var result = await courseService.DeleteCourseAsync(id);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

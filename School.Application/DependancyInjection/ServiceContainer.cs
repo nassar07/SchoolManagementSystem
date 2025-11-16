@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using School.Application.Mappings;
 using School.Application.Services.Implementation;
 using School.Application.Services.Implementation.Authentication;
 using School.Application.Services.Interfaces;
