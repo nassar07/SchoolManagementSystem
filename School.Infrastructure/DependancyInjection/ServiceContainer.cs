@@ -10,11 +10,13 @@ using Microsoft.IdentityModel.Tokens;
 using School.Application.Services.Interfaces;
 using School.Domain.Entities.Identity;
 using School.Domain.Interfaces;
+using School.Domain.Interfaces.AttendanceSpecifies;
 using School.Domain.Interfaces.Authentication;
 using School.Domain.Interfaces.CourseSpecifies;
 using School.Domain.Interfaces.DepartmentSpecifies; 
 using School.Infrastructure.Data;
 using School.Infrastructure.Repositories;
+using School.Infrastructure.Repositories.AttendanceSpecifies;
 using School.Infrastructure.Repositories.Authentication;
 using School.Infrastructure.Repositories.CourseSpecifies;
 using School.Infrastructure.Repositories.DepartmentSpecifies;
@@ -41,8 +43,10 @@ namespace School.Infrastructure.DependancyInjection
             services.AddScoped<ITokenManagement, TokenManagement>();
             services.AddScoped(typeof(IAppLogger<>), typeof(SerilogLoggerAdapter<>));
             services.AddScoped(typeof(IGeneric<>), typeof(GenericRepository<>));
-            services.AddScoped<IDepartment, DepartmentRepository>();
+            services.AddScoped<IClass, ClassRepository>();
             services.AddScoped<ICourse, CourseRepository>();
+            services.AddScoped<IDepartment, DepartmentRepository>();
+            services.AddScoped<IAttendance, AttendanceRepository>();
 
 
             services.AddIdentityCore<ApplicationUser>(options =>

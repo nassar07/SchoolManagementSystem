@@ -7,7 +7,7 @@ namespace School.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController(IAuthenticationService authenticationService) : ControllerBase
+    public class authController(IAuthenticationService authenticationService) : ControllerBase
     {
         [HttpPost("register")]
         public async Task<IActionResult> Create(CreateUserDto user)

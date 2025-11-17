@@ -8,8 +8,8 @@ namespace School.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
-    public class AdminController(IDepartmentService departmentService , ICourseService courseService) : ControllerBase
+    //[Authorize(Roles = "Admin")]
+    public class adminController(IDepartmentService departmentService , ICourseService courseService) : ControllerBase
     {
         [HttpPost("departments/create")]
         public async Task<IActionResult> CreateDepartment([FromBody] CreateDepartmentDto createDepartmentDto)
