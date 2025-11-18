@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using School.Application.DTOs.Submission;
 using School.Application.Services.Interfaces;
 
@@ -6,6 +7,7 @@ namespace School.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Student")]
     public class studentController(IStudentClassService studentClassService, IAttendanceService attendanceService, IAssignmentService assignmentService, ISubmissionsService submissionsService) : ControllerBase
     {
         [HttpGet("classes/{studentId}")]

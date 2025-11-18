@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using School.Application.DTOs.Assignment;
 using School.Application.DTOs.Attendance;
 using School.Application.DTOs.Class;
@@ -10,6 +11,7 @@ namespace School.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Teacher")]
     public class teacherController(IClassService classService, IAttendanceService attendanceService, IAssignmentService assignmentService) : ControllerBase
     {
         [HttpPost("classes/Create")]
