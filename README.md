@@ -55,72 +55,89 @@ A **backend API** for managing **students, teachers, departments, courses, class
 
 ## 🔧 Setup Instructions
 
-1️⃣ **Clone the repository**
+### 1️⃣ Clone the repository
+Clone the repo and enter the project folder:
+
 ```bash
 git clone https://github.com/YourUsername/SchoolManagementSystem.git
 cd SchoolManagementSystem
 2️⃣ Configure connection string
+Set your SQL Server connection in School.API/appsettings.json:
 
-In School.API/appsettings.json:
-
+bash
+Copy code
 "ConnectionStrings": { 
   "DefaultConnection": "YOUR_SQL_CONNECTION_STRING" 
 }
+Also update AppDbContextFactory.cs in School.Infrastructure/Data:
 
-
-Update AppDbContextFactory.cs in School.Infrastructure/Data:
-
+bash
+Copy code
 optionsBuilder.UseSqlServer(
     "YOUR_SQL_CONNECTION_STRING",
     sql => sql.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
 );
-
-
 3️⃣ Run database migrations
+Add initial migration and update the database:
 
+bash
+Copy code
 dotnet ef migrations add InitialCreate -p School.Infrastructure -s School.API
 dotnet ef database update -p School.Infrastructure -s School.API
-
 🔐 API Endpoints
 Authentication
-Method	Endpoint	Description
-POST	/api/auth/register	Register new user (Admin / Teacher / Student)
-POST	/api/auth/login	Login and receive JWT
-POST	/api/auth/refresh-token	Refresh JWT token
-Admin APIs
-Method	Endpoint	Description
-POST	/api/admin/departments/create	Create department
-GET	/api/admin/departments/GetById/{id}	Get department by ID
-GET	/api/admin/departments/GetAll	Get all departments
-PUT	/api/admin/departments/Update/{id}	Update department
-DELETE	/api/admin/departments/delete/{id}	Delete department
-POST	/api/admin/courses/create	Create course
-GET	/api/admin/courses/GetById/{id}	Get course by ID
-GET	/api/admin/courses/GetAll	Get all courses
-PUT	/api/admin/courses/Update/{id}	Update course
-DELETE	/api/admin/courses/delete/{id}	Delete course
-Teacher APIs
-Method	Endpoint	Description
-POST	/api/teacher/classes/Create	Create class
-GET	/api/teacher/classes/GetById/{id}	Get class by ID
-GET	/api/teacher/classes/GetAll	Get all classes
-PUT	/api/teacher/classes/Update/{id}	Update class
-PUT	/api/teacher/classes/Deactivate/{id}	Deactivate class
-DELETE	/api/teacher/classes/delete/{id}	Delete class
-POST	/api/teacher/classes/AssignStudentToClass	Assign student to class
-POST	/api/teacher/attendance	Mark attendance
-GET	/api/teacher/attendance/{classId}	Get attendance by class
-POST	/api/teacher/assignments	Create assignment
-GET	/api/teacher/assignments/{classId}	Get assignments by class
-POST	/api/teacher/assignments/{assignmentId}/{StudentId}/grade	Grade student submission
-Student APIs
-Method	Endpoint	Description
-GET	/api/student/classes/{studentId}	Get student enrolled classes
-GET	/api/student/attendance/{studentId}	Get student attendance
-GET	/api/student/grades/{studentId}	Get student grades
-POST	/api/student/assignments/submit	Submit assignment
-📝 Validation Rules
+Endpoints for registering, logging in, and refreshing JWT tokens:
 
+bash
+Copy code
+POST   /api/auth/register        # Register new user (Admin / Teacher / Student)
+POST   /api/auth/login           # Login and receive JWT
+POST   /api/auth/refresh-token   # Refresh JWT token
+Admin APIs
+Manage departments and courses (Admin only):
+
+bash
+Copy code
+POST   /api/admin/departments/create       # Create department
+GET    /api/admin/departments/GetById/{id} # Get department by ID
+GET    /api/admin/departments/GetAll       # Get all departments
+PUT    /api/admin/departments/Update/{id}  # Update department
+DELETE /api/admin/departments/delete/{id}  # Delete department
+
+POST   /api/admin/courses/create           # Create course
+GET    /api/admin/courses/GetById/{id}    # Get course by ID
+GET    /api/admin/courses/GetAll          # Get all courses
+PUT    /api/admin/courses/Update/{id}     # Update course
+DELETE /api/admin/courses/delete/{id}     # Delete course
+Teacher APIs
+Manage classes, attendance, assignments, and grading (Teacher only):
+
+bash
+Copy code
+POST   /api/teacher/classes/Create                   # Create class
+GET    /api/teacher/classes/GetById/{id}            # Get class by ID
+GET    /api/teacher/classes/GetAll                  # Get all classes
+PUT    /api/teacher/classes/Update/{id}             # Update class
+PUT    /api/teacher/classes/Deactivate/{id}         # Deactivate class
+DELETE /api/teacher/classes/delete/{id}             # Delete class
+POST   /api/teacher/classes/AssignStudentToClass    # Assign student to class
+
+POST   /api/teacher/attendance                      # Mark attendance
+GET    /api/teacher/attendance/{classId}           # Get attendance by class
+
+POST   /api/teacher/assignments                     # Create assignment
+GET    /api/teacher/assignments/{classId}          # Get assignments by class
+POST   /api/teacher/assignments/{assignmentId}/{StudentId}/grade # Grade student submission
+Student APIs
+View classes, attendance, grades, and submit assignments (Student only):
+
+bash
+Copy code
+GET    /api/student/classes/{studentId}     # Get student enrolled classes
+GET    /api/student/attendance/{studentId}  # Get student attendance
+GET    /api/student/grades/{studentId}      # Get student grades
+POST   /api/student/assignments/submit      # Submit assignment
+📝 Validation Rules
 Email format & password strength validation
 
 Prevent duplicate student enrollment
@@ -132,12 +149,14 @@ Only assigned teacher can mark attendance/grade
 Admin-only endpoints cannot be accessed by other roles
 
 🖥 Run the API
+bash
+Copy code
 dotnet build
 dotnet run --project School.API
+Swagger available at:
 
-
-Swagger available at: https://localhost:{PORT}/swagger
-
+bash
+Copy code
+https://localhost:{PORT}/swagger
 🎥 Demo Video
-
-Add demo video link here: Demo Video
+Add demo video link here:
