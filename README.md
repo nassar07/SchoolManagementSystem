@@ -59,7 +59,7 @@ A **backend API** for managing **students, teachers, departments, courses, class
 Clone the repo and enter the project folder:
 
 ```bash
-git clone https://github.com/YourUsername/SchoolManagementSystem.git
+git clone https://github.com/nassar07/SchoolManagementSystem.git
 cd SchoolManagementSystem
 2️⃣ Configure connection string
 Set your SQL Server connection in School.API/appsettings.json:
@@ -159,4 +159,4 @@ bash
 Copy code
 https://localhost:{PORT}/swagger
 🎥 Demo Video
-Add demo video link here:
+Add demo video link here: https://drive.google.com/file/d/10ejNfJ8ngQRwI8jdDiGCYnweTRtGtQLs/view?usp=drive_link
