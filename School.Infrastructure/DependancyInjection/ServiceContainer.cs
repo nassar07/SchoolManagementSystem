@@ -15,6 +15,7 @@ using School.Domain.Interfaces.AttendanceSpecifies;
 using School.Domain.Interfaces.Authentication;
 using School.Domain.Interfaces.CourseSpecifies;
 using School.Domain.Interfaces.DepartmentSpecifies;
+using School.Domain.Interfaces.StudentClassSpecifies;
 using School.Domain.Interfaces.SubmissionSpecifies;
 using School.Infrastructure.Data;
 using School.Infrastructure.Repositories;
@@ -23,6 +24,7 @@ using School.Infrastructure.Repositories.AttendanceSpecifies;
 using School.Infrastructure.Repositories.Authentication;
 using School.Infrastructure.Repositories.CourseSpecifies;
 using School.Infrastructure.Repositories.DepartmentSpecifies;
+using School.Infrastructure.Repositories.StudentClassSpecifies;
 using School.Infrastructure.Repositories.SubmissionSpecifies;
 using School.Infrastructure.Services;
 
@@ -53,6 +55,7 @@ namespace School.Infrastructure.DependancyInjection
             services.AddScoped<IAttendance, AttendanceRepository>();
             services.AddScoped<IAssignment, AssignmentRepository>();
             services.AddScoped<ISubmission, SubmissionRepository>();
+            services.AddScoped<IStudentClass, StudentClassRepository>();
 
 
             services.AddIdentityCore<ApplicationUser>(options =>

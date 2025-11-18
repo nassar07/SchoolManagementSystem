@@ -10,5 +10,6 @@ namespace School.Application.Services.Interfaces
         Task<AssignmentDto> GetAssignmentByClassIdAsync(Guid classId);
         Task<ServiceResponse> CreateAssignmentAsync(CreateAssignmentDto createAssignmentDto);
         Task<ServiceResponse> GradeStudentSubmissions(Guid assignmentId, Guid StudentId, GradeSubmissionDto gradeSubmissionDto);
+        Task<ServiceResponse<IEnumerable<StudentGradeDto>>> GetStudentGradesAsync(Guid studentId);
     }
 }

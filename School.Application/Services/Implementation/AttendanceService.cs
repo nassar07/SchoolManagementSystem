@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using School.Application.DTOs;
 using School.Application.DTOs.Attendance;
-using School.Application.DTOs.Department;
 using School.Application.Services.Interfaces;
 using School.Domain.Entities;
 using School.Domain.Interfaces;
@@ -30,6 +29,28 @@ namespace School.Application.Services.Implementation
 
             }
             var attendances = await attendanceSpecifies.GetAttendanceByClassIdAsync(classId);
+            var attendanceDtos = mapper.Map<List<AttendanceDto>>(attendances);
+            return new ServiceResponse<List<AttendanceDto>>
+            {
+                Data = attendanceDtos,
+                Success = true,
+                Message = "Attendance records retrieved successfully."
+            };
+        }
+
+        public async Task<ServiceResponse<List<AttendanceDto>>> GetAttendanceByStudentIdAsync(Guid studentId)
+        {
+            var IsStudentRole = await role.GetRoleByUserId(studentId);
+            if (IsStudentRole != "Student")
+            {
+                return new ServiceResponse<List<AttendanceDto>>
+                {
+                    Data = null,
+                    Success = false,
+                    Message = "User is not a Student."
+                };
+            }
+            var attendances = await attendanceSpecifies.GetAttendanceByStudentIdAsync(studentId);
             var attendanceDtos = mapper.Map<List<AttendanceDto>>(attendances);
             return new ServiceResponse<List<AttendanceDto>>
             {

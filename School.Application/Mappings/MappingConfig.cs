@@ -21,7 +21,7 @@ namespace School.Application.Mappings
 
             CreateMap<CreateDepartmentDto, Department>();
             CreateMap<DepartmentDto, Department>();
-            CreateMap<UpdateDepartmentDto,Department>();
+            CreateMap<UpdateDepartmentDto, Department>();
             CreateMap<Department, DepartmentDto>();
 
 
@@ -37,7 +37,6 @@ namespace School.Application.Mappings
             CreateMap<Course, CourseDto>();
 
 
-            CreateMap<EnrollStudentDto, StudentClass>();
 
             CreateMap<AttendanceDto, Attendance>();
             CreateMap<MarkAttendanceDto, Attendance>();
@@ -54,6 +53,13 @@ namespace School.Application.Mappings
             CreateMap<SubmissionDto, Submission>();
             CreateMap<GradeSubmissionDto, Submission>();
             CreateMap<Submission, SubmissionDto>();
+            CreateMap<Submission, StudentGradeDto>();
+
+
+            CreateMap<EnrollStudentDto, StudentClass>();
+            CreateMap<StudentClassDto, StudentClass>();
+            CreateMap<StudentClass, StudentClassDto>();
+
 
 
 

@@ -7,5 +7,6 @@ namespace School.Application.Services.Interfaces
     {
         Task<ServiceResponse> MarkAttendanceAsync(MarkAttendanceDto markAttendanceDto);
         Task<ServiceResponse<List<AttendanceDto>>> GetAttendanceByClassIdAsync(Guid classId);
+        Task<ServiceResponse<List<AttendanceDto>>> GetAttendanceByStudentIdAsync(Guid studentId);
     }
 }

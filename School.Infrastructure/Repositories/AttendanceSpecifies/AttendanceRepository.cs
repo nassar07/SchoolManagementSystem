@@ -15,5 +15,14 @@ namespace School.Infrastructure.Repositories.AttendanceSpecifies
                 .ToListAsync();
             return attendances;
         }
+
+        public async Task<IEnumerable<Attendance>> GetAttendanceByStudentIdAsync(Guid studentId)
+        {
+            var attendances = await context.Attendances
+                .Where(a => a.StudentId == studentId)
+                .AsNoTracking()
+                .ToListAsync();
+            return attendances;
+        }
     }
 }

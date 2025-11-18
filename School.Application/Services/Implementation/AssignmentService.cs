@@ -63,6 +63,28 @@ namespace School.Application.Services.Implementation
 
         }
 
+        public async Task<ServiceResponse<IEnumerable<StudentGradeDto>>> GetStudentGradesAsync(Guid studentId)
+        {
+            var isStudentExist = await role.GetRoleByUserId(studentId);
+            if(isStudentExist != "Student")
+            {
+                return new ServiceResponse<IEnumerable<StudentGradeDto>>
+                {
+                    Message = "User is not a student.",
+                    Success = false,
+                    Data = null
+                };
+            }
+            var grades = await submissionRepository.GetStudentGradesByStudentId(studentId);
+            var mappedGrades = mapper.Map<IEnumerable<StudentGradeDto>>(grades);
+            return new ServiceResponse<IEnumerable<StudentGradeDto>>
+            {
+                Message = "Student grades retrieved successfully.",
+                Success = true,
+                Data = mappedGrades
+            };
+        }
+
         public async Task<ServiceResponse> GradeStudentSubmissions(Guid assignmentId, Guid StudentId, GradeSubmissionDto gradeSubmissionDto)
         {
             var submission = await submissionRepository.GetSubmissionByStudentIdAndAssignmentId(StudentId, assignmentId); 
@@ -75,6 +97,15 @@ namespace School.Application.Services.Implementation
                 };
             }
             submission.Grade = gradeSubmissionDto.Grade;
+            var IsTeacherRole = await role.GetRoleByUserId(gradeSubmissionDto.GradedByTeacherId);
+            if (IsTeacherRole != "Teacher")
+            {
+                return new ServiceResponse
+                {
+                    Message = "Only teachers can grade submissions.",
+                    Success = false
+                };
+            }
             submission.GradedByTeacherId = gradeSubmissionDto.GradedByTeacherId;
             submission.Remarks = gradeSubmissionDto.Remarks;
             await submissionInterface.UpdateAsync(submission);
@@ -84,5 +115,7 @@ namespace School.Application.Services.Implementation
                 Success = true
             };
         }
+
+        
     }
 }

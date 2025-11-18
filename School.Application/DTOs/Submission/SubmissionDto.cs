@@ -1,4 +1,6 @@
-﻿namespace School.Application.DTOs.Submission
+﻿using Microsoft.AspNetCore.Http;
+
+namespace School.Application.DTOs.Submission
 {
     public class SubmissionDto
     {
