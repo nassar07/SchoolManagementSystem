@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using School.Application.DTOs.Assignment;
 using School.Application.DTOs.Attendance;
 using School.Application.DTOs.Class;
 using School.Application.DTOs.Course;
 using School.Application.DTOs.Department;
 using School.Application.DTOs.Identity;
 using School.Application.DTOs.StudentClass;
+using School.Application.DTOs.Submission;
 using School.Domain.Entities;
 using School.Domain.Entities.Identity;
 
@@ -40,6 +42,21 @@ namespace School.Application.Mappings
             CreateMap<AttendanceDto, Attendance>();
             CreateMap<MarkAttendanceDto, Attendance>();
             CreateMap<Attendance, AttendanceDto>();
+
+
+            CreateMap<AssignmentDto, Assignment>();
+            CreateMap<CreateAssignmentDto, Assignment>();
+            CreateMap<Assignment, AssignmentDto>();
+            CreateMap<UpdateAssignmentDto, Assignment>();
+
+
+            CreateMap<SubmitAssignmentDto, Submission>();
+            CreateMap<SubmissionDto, Submission>();
+            CreateMap<GradeSubmissionDto, Submission>();
+            CreateMap<Submission, SubmissionDto>();
+
+
+
 
 
 

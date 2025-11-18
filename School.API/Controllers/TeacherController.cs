@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using School.Application.DTOs.Assignment;
 using School.Application.DTOs.Attendance;
 using School.Application.DTOs.Class;
-using School.Application.DTOs.Department;
 using School.Application.DTOs.StudentClass;
-using School.Application.Services.Implementation;
+using School.Application.DTOs.Submission;
 using School.Application.Services.Interfaces;
 
 namespace School.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class teacherController(IClassService classService, IAttendanceService attendanceService) : ControllerBase
+    public class teacherController(IClassService classService, IAttendanceService attendanceService, IAssignmentService assignmentService) : ControllerBase
     {
         [HttpPost("classes/Create")]
         public async Task<IActionResult> CreateClass([FromBody] CreateClassDto createClassDto)
@@ -68,6 +68,24 @@ namespace School.API.Controllers
         public async Task<IActionResult> GetAttendanceByClassId(Guid classId)
         {
             var result = await attendanceService.GetAttendanceByClassIdAsync(classId);
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
+        [HttpPost("assignments")]
+        public async Task<IActionResult> CreateAssignment([FromBody] CreateAssignmentDto createAssignmentDto)
+        {
+            var result = await assignmentService.CreateAssignmentAsync(createAssignmentDto);
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
+        [HttpGet("assignments/{classId}")]
+        public async Task<IActionResult> GetAssignmentsByClassId(Guid classId)
+        {
+            var assignmentDto = await assignmentService.GetAssignmentByClassIdAsync(classId);
+            return assignmentDto != null ? Ok(assignmentDto) : NotFound();
+        }
+        [HttpPost("assignments/{assignmentId}/{StudentId}/grade")]
+        public async Task<IActionResult> GradeStudentSubmission(Guid assignmentId, Guid StudentId, [FromBody] GradeSubmissionDto gradeSubmissionDto)
+        {
+            var result = await assignmentService.GradeStudentSubmissions(assignmentId, StudentId, gradeSubmissionDto);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

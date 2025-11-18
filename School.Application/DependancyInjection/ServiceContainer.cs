@@ -22,6 +22,8 @@ namespace School.Application.DependancyInjection
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<IAttendanceService, AttendanceService>();
+            services.AddScoped<IAssignmentService, AssignmentService>();
+            services.AddScoped<ISubmissionsService, SubmissionsService>();
 
 
             return services;
